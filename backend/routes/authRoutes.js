@@ -7,7 +7,7 @@ import passport from '../config/passportConfig.js';
 
 const router = express.Router();
 
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173"
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
 
 // POST restituisce token di accesso
 router.post('/login', async (req, res) => {
@@ -45,15 +45,18 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 // Rotta di callback per l'autenticazione Google
 router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: `${FRONTEND_URL}/login` }),
-  async (req, res) => {
-    try {
-      const token = await generateJWT({ id: req.user._id });
-      res.redirect(`${FRONTEND_URL}/login?token=${token}`);
-    } catch (error) {
-      console.error('Errore nella generazione del token:', error)
-      res.redirect(`${FRONTEND_URL}/login?error=auth_failed`);
-    }
-  }
+  handleAuthCallback
 );
+
+
+async function handleAuthCallback(req, res) {
+  try {
+    const token = await generateJWT({ id: req.user._id });
+    res.redirect(`${FRONTEND_URL}/login?token=${token}`);
+  } catch (error) {
+    console.error('Errore nella generazione del token:', error)
+    res.redirect(`${FRONTEND_URL}/login?error=auth_failed`);
+  }
+}
 
 export default router;

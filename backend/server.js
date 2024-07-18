@@ -1,4 +1,3 @@
-// Importazione dei moduli necessari
 import express from "express"; // Framework web per Node.js
 import mongoose from "mongoose"; // ODM per MongoDB
 import dotenv from "dotenv"; // Per caricare variabili d'ambiente da file .env
@@ -29,7 +28,7 @@ const corsOptions = {
   origin: function (origin, callback) {
     const whiteList = [
       "http:/localhost:5173",
-      "strive-blog-ten.vercel.app",//vercel
+      "https://strive-blog-ten.vercel.app/",//vercel
       "https://strive-blog.onrender.com"//render
     ]
 
