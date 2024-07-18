@@ -4,8 +4,10 @@ import { generateJWT } from '../utils/jwt.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import passport from '../config/passportConfig.js';
 
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173"
+
 const router = express.Router();
+
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173"
 
 // POST restituisce token di accesso
 router.post('/login', async (req, res) => {

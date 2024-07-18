@@ -42,7 +42,7 @@ const corsOptions = {
     }
   },
   credentials: true
-}
+};
 
 
 // Applicazione dei middleware globali
