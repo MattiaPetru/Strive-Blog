@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import React from "react";
+import { getUserData } from "../services/api";
 import SearchBar from "../pages/SearchBar";
 import "./Navbar.css";
 
@@ -11,9 +12,22 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn, onSearch }) {
 
   useEffect(() => {
     // Controlla se esiste un token nel localStorage
-    const checkLoginStatus = () => {
+    const checkLoginStatus = async () => {
       const token = localStorage.getItem("token");
-      setIsLoggedIn(!!token);
+
+      if(token){
+        try {
+          await getUserData();
+          setIsLoggedIn(true);
+        } catch (error) {
+          console.error("token non funzionante", error)
+          localStorage.removeItem("token")
+          setIsLoggedIn(false);
+        }
+      }else{
+        setIsLoggedIn(false);
+      }
+      setIsLoggedIn(false);
     };
 
     // Controlla lo stato di login all'avvio
@@ -22,9 +36,12 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn, onSearch }) {
     // Aggiungi un event listener per controllare lo stato di login
     window.addEventListener("storage", checkLoginStatus);
 
+    window.addEventListener("loginStateChange", checkLoginStatus)
+
     // Rimuovi l'event listener quando il componente viene smontato
     return () => {
       window.removeEventListener("storage", checkLoginStatus);
+      window.removeEventListener("loginStateChange", checkLoginStatus);
     };
   }, [setIsLoggedIn]);
 

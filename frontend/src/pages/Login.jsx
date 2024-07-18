@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react"; // Importa il hook useState da React per gestire lo stato
-import { useNavigate, useLocation } from "react-router-dom"; // Importa useNavigate da react-router-dom per navigare programmaticamente
-import { loginUser } from "../services/api"; // Importa la funzione API per effettuare il login
+import { useState, useEffect } from "react"; 
+import { useNavigate, useLocation } from "react-router-dom"; 
+import { loginUser } from "../services/api"; 
 import { FaGoogle } from 'react-icons/fa';
 import "./Login.css";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -52,7 +54,7 @@ export default function Login() {
 
   const handleGoogleLogin = () => {
 
-    window.location.href = "http://localhost:5001/api/auth/google";
+    window.location.href = `${API_URL}/api/auth/google`;
   }
 
   return (

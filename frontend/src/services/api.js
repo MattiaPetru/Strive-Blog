@@ -1,9 +1,9 @@
-import axios from "axios"; // Importa il modulo axios per effettuare le richieste HTTP
+import axios from "axios";
 
 // Definiamo l'url di base per tutte le richieste API
-const API_URL = "http://localhost:5001/api";
+const API_URL = "https://strive-blog.onrender.com/api";
 
-// Configura un'istanza di axios con l'URL di base
+
 const api = axios.create({
   baseURL: API_URL,
 });
@@ -14,7 +14,6 @@ api.interceptors.request.use(
     // Recupera il token dalla memoria locale
     const token = localStorage.getItem("token");
     if (token) {
-      // Se il token esiste, aggiungilo all'header di autorizzazione
       config.headers["Authorization"] = `Bearer ${token}`;
       console.log("Token inviato:", token); // Log del token inviato per debugging
     }
