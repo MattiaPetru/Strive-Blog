@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react"; // Importa i hook useState e useEffect da React
-import { useParams, Link } from "react-router-dom"; // Importa useParams e Link da react-router-dom per gestire i parametri dell'URL e creare link
-import { getPost, getComments, addComment, getUserData } from "../services/api"; // Importa le funzioni API per interagire con il backend
-import "./PostDetail.css"; // Importa il file CSS per il componente PostDetail
+import { useState, useEffect } from "react"; 
+import { useParams, Link } from "react-router-dom"; 
+import { getPost, getComments, addComment, getUserData } from "../services/api"; 
+import "./PostDetail.css"; 
+
 
 export default function PostDetail() {
   const [post, setPost] = useState(null); // Stato per memorizzare i dati del post
@@ -80,7 +81,7 @@ export default function PostDetail() {
     }
   };
 
-  if (!post) return <div>Caricamento...</div>; // Mostra un messaggio di caricamento se i dati del post non sono ancora stati caricati
+  if (!post) return <div>Caricamento in corso...</div>; // Mostra un messaggio di caricamento se i dati del post non sono ancora stati caricati
 
   // Rendering del componente
   return (
