@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"; 
 import { useParams, Link } from "react-router-dom"; 
-import { getPost, getComments, addComment, getUserData } from "../services/api"; 
+import { getPost, getComments, addComment,updateComment, deleteComment, getUserData } from "../services/api"; 
 import "./PostDetail.css"; 
 
 
@@ -10,6 +10,8 @@ export default function PostDetail() {
   const [newComment, setNewComment] = useState({ content: "" }); // Stato per il nuovo commento da aggiungere
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Stato per verificare se l'utente è loggato
   const [userData, setUserData] = useState(null); // Stato per memorizzare i dati dell'utente
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editedCommentContent, setEditedCommentContent] = useState("");
   const { id } = useParams(); // Ottiene l'ID del post dai parametri dell'URL
 
   // Effettua il fetch dei dati del post e dei commenti al caricamento del componente
@@ -81,6 +83,40 @@ export default function PostDetail() {
     }
   };
 
+
+  //
+  const handleEditComment = (commentId, content) => {
+    setEditingCommentId(commentId);
+    setEditedCommentContent(content);
+  };
+
+  const handleSaveEdit = async (commentId) => {
+    try {
+      const updatedComment = await updateComment(id, commentId, { content: editedCommentContent });
+      setComments(comments.map(comment => 
+        comment._id === commentId ? updatedComment : comment
+      ));
+      setEditingCommentId(null);
+    } catch (error) {
+      console.error("Errore nell'aggiornamento del commento:", error);
+      alert("Errore nell'aggiornamento del commento");
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    if (window.confirm("Sei sicuro di voler eliminare questo commento?")) {
+      try {
+        await deleteComment(id, commentId);
+        setComments(comments.filter(comment => comment._id !== commentId));
+      } catch (error) {
+        console.error("Errore nell'eliminazione del commento:", error);
+        alert("Errore nell'eliminazione del commento");
+      }
+    }
+  };
+
+
+  
   if (!post) return <div>Caricamento in corso...</div>; // Mostra un messaggio di caricamento se i dati del post non sono ancora stati caricati
 
   // Rendering del componente
