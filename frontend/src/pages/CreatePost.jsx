@@ -87,6 +87,13 @@ export default function CreatePost() {
     } catch (error) {
       console.error("Errore nella creazione del post:", error);
       setError(error.response?.data?.message || "Si è verificato un errore durante la creazione del post");
+      // Dopo 1 secondo, aggiorna il messaggio di errore
+    setTimeout(() => {
+      setError((prevError) => prevError + " Reindirizzamento alla home tra 2 secondi...");
+    }, 1000);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000); // 3000 millisecondi = 3 secondi
     }
   };
 
