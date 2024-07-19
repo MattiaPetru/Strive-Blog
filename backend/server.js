@@ -28,7 +28,7 @@ const corsOptions = {
   origin: function (origin, callback) {
     const whiteList = [
       "http:/localhost:5173",
-      "https://strive-blog-ten.vercel.app/",//vercel
+      "https://strive-blog-ten.vercel.app",//vercel
       "https://strive-blog.onrender.com"//render
     ]
 
