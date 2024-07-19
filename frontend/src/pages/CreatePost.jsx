@@ -1,13 +1,12 @@
-// NEW! Importa, oltre a useState anche useEffect
 import { useState, useEffect } from "react";
-// Importa useNavigate da react-router-dom per la navigazione programmatica
 import { useNavigate } from "react-router-dom";
-// NEW! Importo anche getMe dalle api
 import { createPost, getMe } from "../services/api";
-// Importa il file CSS per gli stili specifici di questo componente
 import "./CreatePost.css";
 
+
 export default function CreatePost() {
+
+  const [error, setError] = useState(null);
   // Stato per memorizzare i dati del nuovo post
   const [post, setPost] = useState({
     title: "",
@@ -20,10 +19,10 @@ export default function CreatePost() {
   // Nuovo stato per gestire il file di copertina
   const [coverFile, setCoverFile] = useState(null);
 
-  // Hook per la navigazione
+
   const navigate = useNavigate();
 
-  // NEW! useEffect per l'autenticazione
+  //useEffect per l'autenticazione
   useEffect(() => {
     const fetchUserEmail = async () => {
       try {
@@ -80,11 +79,14 @@ export default function CreatePost() {
       }
 
       // Invia i dati del post al backend
-      await createPost(formData);
+      //await createPost(formData);
+      const response = await createPost(formData);
+    console.log('Post creato:', response);
       // Naviga alla rotta della home dopo la creazione del post
       navigate("/");
     } catch (error) {
       console.error("Errore nella creazione del post:", error);
+      setError(error.response?.data?.message || "Si è verificato un errore durante la creazione del post");
     }
   };
 
@@ -92,6 +94,7 @@ export default function CreatePost() {
   return (
     <div className="container">
       <h1>Crea un nuovo post</h1>
+      {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit} className="create-post-form">
         <div className="form-group">
           <label>Titolo</label>
