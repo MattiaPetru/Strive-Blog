@@ -86,43 +86,57 @@ export default function PostDetail() {
   // Rendering del componente
   return (
     <div className="container">
-      <article className="post-detail">
+    <article className="post-detail">
+      <header className="post-header">
         <img src={post.cover} alt={post.title} className="post-cover" />
-        <h1>{post.title}</h1>
+        <h1 className="post-title">{post.title}</h1>
         <div className="post-meta">
-          <span>Categoria: {post.category}</span>
-          <span>Autore: {post.author}</span>
-          <span>
+          <span className="post-category">Categoria: {post.category}</span>
+          <span className="post-author">Autore: {post.author}</span>
+          <span className="post-read-time">
             Tempo di lettura: {post.readTime.value} {post.readTime.unit}
           </span>
         </div>
+      </header>
+
+      <section className="post-content">
         <div
-          className="comment-post-content"
+          className="post-text"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
+      </section>
 
-       
-        <h3 className="comment-section-title">Commenti</h3>
-        {comments.map((comment) => (
-          <div key={comment._id} className="comment">
-            <p>{comment.content}</p>
-            <small>Di: {comment.name}</small>
+      <section className="comments-section">
+        <h3 className="section-title">Commenti</h3>
+        {comments.length > 0 ? (
+          <div className="comments-list">
+            {comments.map((comment) => (
+              <div key={comment._id} className="comment">
+                <p className="comment-content">{comment.content}</p>
+                <small className="comment-author">Di: {comment.name}</small>
+              </div>
+            ))}
           </div>
-        ))}
+        ) : (
+          <p className="no-comments">Non ci sono ancora commenti per questo post.</p>
+        )}
 
-{isLoggedIn && (
-  <form onSubmit={handleCommentSubmit}>
-    <textarea
-      value={newComment.content}
-      onChange={(e) =>
-        setNewComment({ ...newComment, content: e.target.value })
-      }
-      placeholder="Scrivi un commento..."
-    />
-    <button type="submit">Invia commento</button>
-  </form>
-)}
-      </article>
-    </div>
+        {isLoggedIn && (
+          <form onSubmit={handleCommentSubmit} className="comment-form">
+            <h4 className="form-title">Aggiungi un commento</h4>
+            <textarea
+              value={newComment.content}
+              onChange={(e) =>
+                setNewComment({ ...newComment, content: e.target.value })
+              }
+              placeholder="Scrivi il tuo commento..."
+              className="comment-input"
+            />
+            <button type="submit" className="submit-comment">Invia commento</button>
+          </form>
+        )}
+      </section>
+    </article>
+  </div>
   );
 }
