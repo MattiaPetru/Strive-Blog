@@ -27,7 +27,6 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn, onSearch }) {
       }else{
         setIsLoggedIn(false);
       }
-      setIsLoggedIn(false);
     };
 
     // Controlla lo stato di login all'avvio
