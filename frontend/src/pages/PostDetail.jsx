@@ -71,7 +71,7 @@ export default function PostDetail() {
       if (!newCommentData._id) {
         newCommentData._id = Date.now().toString();
       }
-      setComments((prevComments) => [...prevComments, newCommentData]); // Aggiunge il nuovo commento alla lista dei commenti
+      setComments(prevComments => [newCommentData, ...prevComments]);
       setNewComment({ content: "" }); // Resetta il campo del nuovo commento
     } catch (error) {
       console.error("Errore nell'invio del commento:", error); // Logga l'errore in console
@@ -93,8 +93,8 @@ export default function PostDetail() {
   const handleSaveEdit = async (commentId) => {
     try {
       const updatedComment = await updateComment(id, commentId, { content: editedCommentContent });
-      setComments(comments.map(comment => 
-        comment._id === commentId ? updatedComment : comment
+      setComments(prevComments => prevComments.map(comment => 
+        comment._id === commentId ? { ...comment, content: updatedComment.content } : comment
       ));
       setEditingCommentId(null);
     } catch (error) {
@@ -119,7 +119,7 @@ export default function PostDetail() {
     if (window.confirm("Sei sicuro di voler eliminare questo commento?")) {
       try {
         await deleteComment(id, commentId);
-        setComments(comments.filter(comment => comment._id !== commentId));
+        setComments(prevComments => prevComments.filter(comment => comment._id !== commentId));
       } catch (error) {
         console.error("Errore nell'eliminazione del commento:", error);
         if (error.response) {
