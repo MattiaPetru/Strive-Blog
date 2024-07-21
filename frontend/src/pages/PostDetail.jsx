@@ -104,13 +104,30 @@ export default function PostDetail() {
   };
 
   const handleDeleteComment = async (commentId) => {
+    // Verifica se l'utente è autenticato e ha i permessi per eliminare il commento
+    if (!userData) {
+      alert("Devi essere autenticato per eliminare un commento.");
+      return;
+    }
+
+    const commentToDelete = comments.find(comment => comment._id === commentId);
+    if (!commentToDelete || commentToDelete.email !== userData.email) {
+      alert("Non hai i permessi per eliminare questo commento.");
+      return;
+    }
+
     if (window.confirm("Sei sicuro di voler eliminare questo commento?")) {
       try {
         await deleteComment(id, commentId);
         setComments(comments.filter(comment => comment._id !== commentId));
       } catch (error) {
         console.error("Errore nell'eliminazione del commento:", error);
-        alert("Errore nell'eliminazione del commento");
+        if (error.response) {
+          console.error('Response data:', error.response.data);
+          console.error('Response status:', error.response.status);
+          console.error('Response headers:', error.response.headers);
+        }
+        alert("Errore nell'eliminazione del commento: " + (error.response?.data?.message || error.message));
       }
     }
   };

@@ -70,11 +70,15 @@ export const updateComment = (postId, commentId, commentData) =>
     .then((response) => response.data);
 
 // Funzione per eliminare un commento tramite l'ID del post e l'ID del commento
-export const deleteComment = (postId, commentId) =>
-  api
-    .delete(`/blogPosts/${postId}/comments/${commentId}`)
-    .then((response) => response.data);
-
+export const deleteComment = async (postId, commentId) => {
+  try {
+    const response = await api.delete(`/blogPosts/${postId}/comments/${commentId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error in deleteComment:', error.response || error);
+    throw error;
+  }
+};
 
 
 //Funzione per registrare un nuovo utente
