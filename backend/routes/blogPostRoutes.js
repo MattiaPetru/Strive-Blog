@@ -209,11 +209,11 @@ router.delete("/:id/comments/:commentId", async (req, res) => {
     if (!post) {
       return res.status(404).json({ message: "Post non trovato" });
     }
-    const comment = post.comments.id(req.params.commentId);
-    if (!comment) {
+    const commentIndex = post.comments.findIndex(comment => comment._id.toString() === req.params.commentId);
+    if (commentIndex === -1) {
       return res.status(404).json({ message: "Commento non trovato" });
     }
-    comment.remove();
+    post.comments.splice(commentIndex, 1);
     await post.save();
     res.json({ message: "Commento eliminato con successo" });
   } catch (error) {
