@@ -55,6 +55,16 @@ export default function PostDetail() {
     checkAuthAndFetchUserData(); // Verifica l'autenticazione e carica i dati dell'utente
   }, [id]); // Effettua nuovamente l'effetto quando l'ID del post cambia
 
+
+  // Funzione per recuperare i commenti aggiornati
+const fetchUpdatedComments = async () => {
+  try {
+    const updatedComments = await getComments(id);
+    setComments(updatedComments);
+  } catch (error) {
+    console.error("Errore nel recupero dei commenti aggiornati:", error);
+  }
+};
   // Gestore per la sottomissione del nuovo commento
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +75,12 @@ export default function PostDetail() {
         name: `${userData.nome} ${userData.cognome}`, // Nome dell'utente
         email: userData.email, // Email dell'utente
       };
-      const newCommentData = await addComment(id, commentData); // Invia il nuovo commento all'API
+      //const newCommentData = await addComment(id, commentData); // Invia il nuovo commento all'API
+
+      await addComment(id, commentData);
+      setNewComment({ content: "" });
+      await fetchUpdatedComments();
+
 
       // Genera un ID temporaneo se l'API non restituisce un ID in tempo
       if (!newCommentData._id) {
@@ -92,11 +107,9 @@ export default function PostDetail() {
 
   const handleSaveEdit = async (commentId) => {
     try {
-      const updatedComment = await updateComment(id, commentId, { content: editedCommentContent });
-      setComments(prevComments => prevComments.map(comment => 
-        comment._id === commentId ? { ...comment, content: updatedComment.content } : comment
-      ));
+      await updateComment(id, commentId, { content: editedCommentContent });
       setEditingCommentId(null);
+      await fetchUpdatedComments();
     } catch (error) {
       console.error("Errore nell'aggiornamento del commento:", error);
       alert("Errore nell'aggiornamento del commento");
@@ -119,7 +132,7 @@ export default function PostDetail() {
     if (window.confirm("Sei sicuro di voler eliminare questo commento?")) {
       try {
         await deleteComment(id, commentId);
-        setComments(prevComments => prevComments.filter(comment => comment._id !== commentId));
+        await fetchUpdatedComments();
       } catch (error) {
         console.error("Errore nell'eliminazione del commento:", error);
         if (error.response) {
