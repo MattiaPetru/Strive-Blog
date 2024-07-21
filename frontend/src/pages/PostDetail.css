@@ -104,3 +104,22 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+
+
+.comment-actions {
+  margin-top: 5px;
+}
+
+.comment-actions button {
+  margin-right: 5px;
+  padding: 2px 5px;
+  font-size: 0.8em;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.comment-actions button:hover {
+  background-color: #e0e0e0;
+}

@@ -148,15 +148,37 @@ export default function PostDetail() {
           <div className="comments-list">
             {comments.map((comment) => (
               <div key={comment._id} className="comment">
-                <p className="comment-content">{comment.content}</p>
-                <small className="comment-author">Di: {comment.name}</small>
+                {editingCommentId === comment._id ? (
+                  <div>
+                    <textarea
+                      value={editedCommentContent}
+                      onChange={(e) => setEditedCommentContent(e.target.value)}
+                    />
+                    <button onClick={() => handleSaveEdit(comment._id)}>Salva</button>
+                    <button onClick={() => setEditingCommentId(null)}>Annulla</button>
+                  </div>
+                ) : (
+                  <>
+                    <p className="comment-content">{comment.content}</p>
+                    <small className="comment-author">Di: {comment.name}</small>
+                    {userData && userData.email === comment.email && (
+                      <div className="comment-actions">
+                        <button onClick={() => handleEditComment(comment._id, comment.content)}>
+                          ✏️ Modifica
+                        </button>
+                        <button onClick={() => handleDeleteComment(comment._id)}>
+                          🗑️ Elimina
+                        </button>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
             ))}
           </div>
         ) : (
           <p className="no-comments">Non ci sono ancora commenti per questo post.</p>
         )}
-
         {isLoggedIn && (
           <form onSubmit={handleCommentSubmit} className="comment-form">
             <h4 className="form-title">Aggiungi un commento</h4>
