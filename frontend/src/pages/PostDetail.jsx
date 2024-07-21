@@ -75,18 +75,13 @@ const fetchUpdatedComments = async () => {
         name: `${userData.nome} ${userData.cognome}`, // Nome dell'utente
         email: userData.email, // Email dell'utente
       };
-      //const newCommentData = await addComment(id, commentData); // Invia il nuovo commento all'API
+     
 
       await addComment(id, commentData);
       setNewComment({ content: "" });
       await fetchUpdatedComments();
 
-
-      // Genera un ID temporaneo se l'API non restituisce un ID in tempo
-      if (!newCommentData._id) {
-        newCommentData._id = Date.now().toString();
-      }
-      setComments(prevComments => [newCommentData, ...prevComments]);
+    
       setNewComment({ content: "" }); // Resetta il campo del nuovo commento
     } catch (error) {
       console.error("Errore nell'invio del commento:", error); // Logga l'errore in console
