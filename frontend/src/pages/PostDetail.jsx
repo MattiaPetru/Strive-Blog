@@ -143,55 +143,58 @@ export default function PostDetail() {
       </section>
 
       <section className="comments-section">
-        <h3 className="section-title">Commenti</h3>
-        {comments.length > 0 ? (
-          <div className="comments-list">
-            {comments.map((comment) => (
-              <div key={comment._id} className="comment">
-                {editingCommentId === comment._id ? (
-                  <div>
-                    <textarea
-                      value={editedCommentContent}
-                      onChange={(e) => setEditedCommentContent(e.target.value)}
-                    />
-                    <button onClick={() => handleSaveEdit(comment._id)}>Salva</button>
-                    <button onClick={() => setEditingCommentId(null)}>Annulla</button>
-                  </div>
-                ) : (
-                  <>
-                    <p className="comment-content">{comment.content}</p>
-                    <small className="comment-author">Di: {comment.name}</small>
-                    {userData && userData.email === comment.email && (
-                      <div className="comment-actions">
-                        <button onClick={() => handleEditComment(comment._id, comment.content)}>
-                          ✏️ Modifica
-                        </button>
-                        <button onClick={() => handleDeleteComment(comment._id)}>
-                          🗑️ Elimina
-                        </button>
+          <h3 className="section-title">Commenti</h3>
+          {comments.length > 0 ? (
+            <div className="comments-list">
+              {comments.map((comment) => (
+                <div key={comment._id} className="comment">
+                  {editingCommentId === comment._id ? (
+                    <div className="comment-edit">
+                      <textarea
+                        value={editedCommentContent}
+                        onChange={(e) => setEditedCommentContent(e.target.value)}
+                        className="comment-edit-textarea"
+                      />
+                      <div className="comment-edit-actions">
+                        <button onClick={() => handleSaveEdit(comment._id)} className="btn btn-save">Salva</button>
+                        <button onClick={() => setEditingCommentId(null)} className="btn btn-cancel">Annulla</button>
                       </div>
-                    )}
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="no-comments">Non ci sono ancora commenti per questo post.</p>
-        )}
-        {isLoggedIn && (
-          <form onSubmit={handleCommentSubmit} className="comment-form">
-            <h4 className="form-title">Aggiungi un commento</h4>
-            <textarea
-              value={newComment.content}
-              onChange={(e) =>
-                setNewComment({ ...newComment, content: e.target.value })
-              }
-              placeholder="Scrivi il tuo commento..."
-              className="comment-input"
-            />
-            <button type="submit" className="submit-comment">Invia commento</button>
-          </form>
+                    </div>
+                  ) : (
+                    <>
+                      <p className="comment-content">{comment.content}</p>
+                      <div className="comment-meta">
+                        <small className="comment-author">Di: {comment.name}</small>
+                        {userData && userData.email === comment.email && (
+                          <div className="comment-actions">
+                            <button onClick={() => handleEditComment(comment._id, comment.content)} className="btn btn-edit">
+                              Modifica
+                            </button>
+                            <button onClick={() => handleDeleteComment(comment._id)} className="btn btn-delete">
+                              Elimina
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="no-comments">Non ci sono ancora commenti per questo post.</p>
+          )}
+       {isLoggedIn && (
+            <form onSubmit={handleCommentSubmit} className="comment-form">
+              <h4 className="form-title">Aggiungi un commento</h4>
+              <textarea
+                value={newComment.content}
+                onChange={(e) => setNewComment({ ...newComment, content: e.target.value })}
+                placeholder="Scrivi il tuo commento..."
+                className="comment-input"
+              />
+              <button type="submit" className="btn btn-submit">Invia commento</button>
+            </form>
         )}
       </section>
     </article>
