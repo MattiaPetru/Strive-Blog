@@ -39,7 +39,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await loginUser(formData); /
+      const response = await loginUser(formData); 
       localStorage.setItem("token", response.token); // Memorizza il token di autenticazione nel localStorage
       // Trigger l'evento storage per aggiornare la Navbar
       window.dispatchEvent(new Event("storage"));
