@@ -27,8 +27,8 @@ export default function Home({ isLoggedIn, setIsLoggedIn, searchTerm }) {
 
   useEffect(() => {
     const results = posts.filter(post =>
-      (post.title?.toLowerCase().includes(searchTerm.toLowerCase()) || '') ||
-      (post.author?.toLowerCase().includes(searchTerm.toLowerCase()) || '')
+      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (post.author && post.author.toLowerCase().includes(searchTerm.toLowerCase()))
     );
     setFilteredPosts(results);
   }, [searchTerm, posts]);
@@ -50,6 +50,7 @@ export default function Home({ isLoggedIn, setIsLoggedIn, searchTerm }) {
   return (
     <div className="container">
       <h1>Lista dei Post</h1>
+      <SearchBar onSearch={handleSearch} />
       <div className="post-grid">
         {filteredPosts.map((post) => (
           <Link to={`/post/${post._id}`} key={post._id} className="post-card">
