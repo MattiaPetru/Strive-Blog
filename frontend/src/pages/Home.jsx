@@ -27,8 +27,8 @@ export default function Home({ isLoggedIn, setIsLoggedIn, searchTerm }) {
 
   useEffect(() => {
     const results = posts.filter(post =>
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (post.author && post.author.toLowerCase().includes(searchTerm.toLowerCase()))
+      (post.title?.toLowerCase().includes(searchTerm.toLowerCase()) || '') ||
+      (post.author?.toLowerCase().includes(searchTerm.toLowerCase()) || '')
     );
     setFilteredPosts(results);
   }, [searchTerm, posts]);
