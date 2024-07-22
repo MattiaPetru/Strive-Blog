@@ -4,7 +4,7 @@ import { getPosts,getMe,deleteComment, deletePost } from "../services/api";
 import SearchBar from "./SearchBar";
 import "./Home.css";
 
-export default function Home({ isLoggedIn, setIsLoggedIn, searchTerm }) {
+export default function Home({ isLoggedIn, setIsLoggedIn }) {
   // Stato per memorizzare l'array dei post
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
@@ -17,6 +17,7 @@ export default function Home({ isLoggedIn, setIsLoggedIn, searchTerm }) {
         // Effettua una richiesta GET al backend per ottenere tutti i post
         const response = await getPosts();
         setPosts(response.data);
+        setFilteredPosts(response.data);
       } catch (error) {
         console.error("Errore nella fetch del post:", error);
       }
@@ -26,11 +27,15 @@ export default function Home({ isLoggedIn, setIsLoggedIn, searchTerm }) {
 
 
   const handleSearch = (term) => {
-    const results = posts.filter(post =>
-      (post.title && post.title.toLowerCase().includes(term.toLowerCase())) ||
-      (post.author && post.author.toLowerCase().includes(term.toLowerCase()))
-    );
-    setFilteredPosts(results);
+    if (term.trim() === '') {
+      setFilteredPosts(posts); // Se la ricerca è vuota, mostra tutti i post
+    } else {
+      const results = posts.filter(post =>
+        (post.title && post.title.toLowerCase().includes(term.toLowerCase())) ||
+        (post.author && post.author.toLowerCase().includes(term.toLowerCase()))
+      );
+      setFilteredPosts(results);
+    }
   };
   
 
