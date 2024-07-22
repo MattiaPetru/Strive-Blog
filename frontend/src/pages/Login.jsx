@@ -30,24 +30,24 @@ export default function Login() {
 
   // Gestore del cambiamento degli input del form
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value }); // Aggiorna lo stato del form con i valori degli input
+    setFormData({ ...formData, [e.target.name]: e.target.value }); 
   };
 
 
 
   // Gestore dell'invio del form
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     try {
-      const response = await loginUser(formData); // Chiama la funzione loginUser per autenticare l'utente
+      const response = await loginUser(formData); /
       localStorage.setItem("token", response.token); // Memorizza il token di autenticazione nel localStorage
       // Trigger l'evento storage per aggiornare la Navbar
-      window.dispatchEvent(new Event("storage")); // Scatena un evento di storage per aggiornare componenti come la Navbar
+      window.dispatchEvent(new Event("storage"));
       console.log("Login effettuato con successo!"); 
-      navigate("/"); /
+      navigate("/"); // Naviga alla pagina principale
     } catch (error) {
       console.error("Errore durante il login:", error); 
-      alert("Credenziali non valide. Riprova.");
+      alert("Credenziali non valide. Riprova."); 
     }
   };
 

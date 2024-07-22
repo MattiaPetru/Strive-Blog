@@ -4,7 +4,7 @@ import { getPosts,getMe,deleteComment, deletePost } from "../services/api";
 import SearchBar from "./SearchBar";
 import "./Home.css";
 
-export default function Home({ isLoggedIn, setIsLoggedIn, posts}) {
+export default function Home({ isLoggedIn, setIsLoggedIn}) {
   // Stato per memorizzare l'array dei post
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
@@ -52,7 +52,7 @@ export default function Home({ isLoggedIn, setIsLoggedIn, posts}) {
     <div className="container">
       <h1>Lista dei Post</h1>
       <div className="post-grid">
-        {Array.isArray(posts) && posts.map((post) => (
+        {posts.map((post) => (
           <Link to={`/post/${post._id}`} key={post._id} className="post-card">
             <img src={post.cover} alt={post.title} className="post-image" />
             <div className="post-content">

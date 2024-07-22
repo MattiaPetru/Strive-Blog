@@ -8,39 +8,15 @@ import Login from "./pages/Login";
 import "./App.css";
 import { useState } from "react";
 
-
+// Definisce il componente principale App
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [posts, setPosts] = useState([]);
-  const [filteredPosts, setFilteredPosts] = useState([]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await getPosts();
-        setPosts(response.data);
-        setFilteredPosts(response.data);
-      } catch (error) {
-        console.error("Errore nel recupero dei post:", error);
-      }
-    };
-    fetchPosts();
-  }, []);
-
-  const handleSearch = (searchTerm) => {
-    console.log("App handleSearch called with:", searchTerm);
-    const filtered = posts.filter(post => 
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.author.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    console.log("Filtered posts:", filtered); // Aggiungi questo log
-    setFilteredPosts(filtered);
-  };
+ 
 
   return (
     <Router>
       <div className="App">
-        <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  onSearch={handleSearch}  />
+        <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  />
 
         <main>
           <Routes>
@@ -51,13 +27,12 @@ function App() {
             <Route path="/login" element={<Login />} />
 
             {/* Route per la home page */}
-            <Route path="/" element={<Home />} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} posts={filteredPosts} />
+            <Route path="/" element={<Home />} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
 
             {/* Route per la pagina di creazione di un nuovo post */}
             <Route path="/create" element={<CreatePost />} />
 
-            {/* Route per la pagina di dettaglio di un post
-                :id è un parametro dinamico che rappresenta l'ID del post */}
+            {/* Route per la pagina di dettaglio di un post */}
             <Route path="/post/:id" element={<PostDetail />} />
           </Routes>
         </main>
