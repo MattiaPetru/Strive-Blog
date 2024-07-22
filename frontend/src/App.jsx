@@ -26,14 +26,16 @@ function App() {
     };
     fetchPosts();
   }, []);
+
   const handleSearch = (searchTerm) => {
+    console.log("Searching for:", searchTerm); // Aggiungi questo log
     const filtered = posts.filter(post => 
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       post.author.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    console.log("Filtered posts:", filtered); // Aggiungi questo log
     setFilteredPosts(filtered);
   };
-
   return (
     <Router>
       <div className="App">
@@ -48,7 +50,7 @@ function App() {
             <Route path="/login" element={<Login />} />
 
             {/* Route per la home page */}
-            <Route path="/" element={<Home />} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            <Route path="/" element={<Home />} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} posts={filteredPosts} />
 
             {/* Route per la pagina di creazione di un nuovo post */}
             <Route path="/create" element={<CreatePost />} />

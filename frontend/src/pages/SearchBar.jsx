@@ -6,16 +6,12 @@ const SearchBar = ({ onSearch }) => {
   const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
+    console.log("Search term:", value); // Aggiungi questo log
     onSearch(value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSearch(searchTerm);
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="search-bar">
+    <div className="search-bar">
       <input
         type="text"
         placeholder="Cerca per titolo o autore..."
@@ -23,8 +19,7 @@ const SearchBar = ({ onSearch }) => {
         onChange={handleInputChange}
         className="search-input"
       />
-      <button type="submit" className="search-button">Cerca</button>
-    </form>
+    </div>
   );
 };
 
