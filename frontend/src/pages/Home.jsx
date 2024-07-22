@@ -25,17 +25,14 @@ export default function Home({ isLoggedIn, setIsLoggedIn, searchTerm }) {
   }, []);
 
 
-  useEffect(() => {
+  const handleSearch = (term) => {
     const results = posts.filter(post =>
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (post.author && post.author.toLowerCase().includes(searchTerm.toLowerCase()))
+      (post.title && post.title.toLowerCase().includes(term.toLowerCase())) ||
+      (post.author && post.author.toLowerCase().includes(term.toLowerCase()))
     );
     setFilteredPosts(results);
-  }, [searchTerm, posts]);
-
-  const handleSearch = (term) => {
-    setSearchTerm(term);
   };
+  
 
   const handleDeletePost = async (id) => {
     try {
