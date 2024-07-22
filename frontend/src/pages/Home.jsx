@@ -51,8 +51,9 @@ export default function Home({ isLoggedIn, setIsLoggedIn}) {
   return (
     <div className="container">
       <h1>Lista dei Post</h1>
+      <SearchBar onSearch={handleSearch} />
       <div className="post-grid">
-        {posts.map((post) => (
+        {filteredPosts.map((post) => (
           <Link to={`/post/${post._id}`} key={post._id} className="post-card">
             <img src={post.cover} alt={post.title} className="post-image" />
             <div className="post-content">
