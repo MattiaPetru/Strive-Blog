@@ -37,17 +37,17 @@ export default function Login() {
 
   // Gestore dell'invio del form
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Previene il comportamento predefinito del form di ricaricare la pagina
+    e.preventDefault(); 
     try {
       const response = await loginUser(formData); // Chiama la funzione loginUser per autenticare l'utente
       localStorage.setItem("token", response.token); // Memorizza il token di autenticazione nel localStorage
       // Trigger l'evento storage per aggiornare la Navbar
       window.dispatchEvent(new Event("storage")); // Scatena un evento di storage per aggiornare componenti come la Navbar
-      console.log("Login effettuato con successo!"); // Mostra un messaggio di successo
-      navigate("/"); // Naviga alla pagina principale
+      console.log("Login effettuato con successo!"); 
+      navigate("/"); /
     } catch (error) {
-      console.error("Errore durante il login:", error); // Logga l'errore in console
-      alert("Credenziali non valide. Riprova."); // Mostra un messaggio di errore
+      console.error("Errore durante il login:", error); 
+      alert("Credenziali non valide. Riprova.");
     }
   };
 

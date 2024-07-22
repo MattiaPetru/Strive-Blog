@@ -1,27 +1,43 @@
-
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import PostDetail from "./pages/PostDetail";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-
-// Importa il file CSS per gli stili dell'App
 import "./App.css";
 import { useState } from "react";
 
-// Definisce il componente principale App
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
- 
+  const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await getPosts();
+        setPosts(response.data);
+        setFilteredPosts(response.data);
+      } catch (error) {
+        console.error("Errore nel recupero dei post:", error);
+      }
+    };
+    fetchPosts();
+  }, []);
+  const handleSearch = (searchTerm) => {
+    const filtered = posts.filter(post => 
+      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.author.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredPosts(filtered);
+  };
 
   return (
-    // Router avvolge l'intera applicazione, abilitando il routing
     <Router>
       <div className="App">
-        <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  />
+        <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  onSearch={handleSearch}  />
 
         <main>
           <Routes>
@@ -47,5 +63,4 @@ function App() {
   );
 }
 
-// Esporta il componente App come default per essere utilizzato in altri file
 export default App;

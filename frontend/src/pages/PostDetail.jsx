@@ -84,7 +84,7 @@ const fetchUpdatedComments = async () => {
     
       setNewComment({ content: "" }); // Resetta il campo del nuovo commento
     } catch (error) {
-      console.error("Errore nell'invio del commento:", error); // Logga l'errore in console
+      console.error("Errore nell'invio del commento:", error); 
       alert(
         `Errore nell'invio del commento: ${
           error.response?.data?.message || error.message

@@ -79,10 +79,8 @@ export default function CreatePost() {
       }
 
       // Invia i dati del post al backend
-      //await createPost(formData);
       const response = await createPost(formData);
-    console.log('Post creato:', response);
-      // Naviga alla rotta della home dopo la creazione del post
+      console.log('Post creato:', response);
       navigate("/");
     } catch (error) {
       console.error("Errore nella creazione del post:", error);

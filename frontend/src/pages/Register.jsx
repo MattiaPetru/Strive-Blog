@@ -1,6 +1,6 @@
-import { useState } from "react"; // Importa il hook useState da React per gestire lo stato del componente
-import { useNavigate } from "react-router-dom"; // Importa useNavigate da react-router-dom per navigare tra le pagine
-import { registerUser } from "../services/api"; // Importa la funzione registerUser dal file api.js per effettuare la registrazione
+import { useState } from "react"; 
+import { useNavigate } from "react-router-dom"; 
+import { registerUser } from "../services/api";
 import "./Register.css"
 
 export default function Register() {

@@ -4,7 +4,7 @@ import { getPosts,getMe,deleteComment, deletePost } from "../services/api";
 import SearchBar from "./SearchBar";
 import "./Home.css";
 
-export default function Home({ isLoggedIn, setIsLoggedIn}) {
+export default function Home({ isLoggedIn, setIsLoggedIn, posts}) {
   // Stato per memorizzare l'array dei post
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
