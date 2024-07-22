@@ -36,6 +36,7 @@ function App() {
     console.log("Filtered posts:", filtered); // Aggiungi questo log
     setFilteredPosts(filtered);
   };
+  
   return (
     <Router>
       <div className="App">

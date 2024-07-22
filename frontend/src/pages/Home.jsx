@@ -52,7 +52,7 @@ export default function Home({ isLoggedIn, setIsLoggedIn, posts}) {
     <div className="container">
       <h1>Lista dei Post</h1>
       <div className="post-grid">
-        {posts.map((post) => (
+        {Array.isArray(posts) && posts.map((post) => (
           <Link to={`/post/${post._id}`} key={post._id} className="post-card">
             <img src={post.cover} alt={post.title} className="post-image" />
             <div className="post-content">

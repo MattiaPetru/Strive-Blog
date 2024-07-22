@@ -6,8 +6,11 @@ const SearchBar = ({ onSearch }) => {
   const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-    console.log("Search term:", value); // Aggiungi questo log
-    onSearch(value);
+    if (typeof onSearch === 'function') {
+      onSearch(value);
+    } else {
+      console.error('onSearch is not a function');
+    }
   };
 
   return (
