@@ -60,7 +60,6 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn, onSearch }) {
         <Link to="/" className="navbar-brand">
           Strive Blog
         </Link>
-        <SearchBar onSearch={onSearch} />
         <button className="mobile-menu-button" onClick={toggleMobileMenu}>
           ☰
         </button>
