@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = (props) => {
+  console.log("SearchBar props:", props); // Aggiungi questo log
+
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-    if (typeof onSearch === 'function') {
-      onSearch(value);
+    console.log("Search term:", value);
+    console.log("onSearch type:", typeof props.onSearch); // Aggiungi questo log
+    if (typeof props.onSearch === 'function') {
+      props.onSearch(value);
     } else {
-      console.error('onSearch is not a function');
+      console.error('onSearch is not a function', props.onSearch);
     }
   };
 

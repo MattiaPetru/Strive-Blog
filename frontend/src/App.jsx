@@ -28,7 +28,7 @@ function App() {
   }, []);
 
   const handleSearch = (searchTerm) => {
-    console.log("Searching for:", searchTerm); // Aggiungi questo log
+    console.log("App handleSearch called with:", searchTerm);
     const filtered = posts.filter(post => 
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       post.author.toLowerCase().includes(searchTerm.toLowerCase())
@@ -36,7 +36,7 @@ function App() {
     console.log("Filtered posts:", filtered); // Aggiungi questo log
     setFilteredPosts(filtered);
   };
-  
+
   return (
     <Router>
       <div className="App">

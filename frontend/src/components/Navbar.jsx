@@ -2,11 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import React from "react";
 import { getUserData } from "../services/api";
-import SearchBar from "../pages/SearchBar";
+import SearchBar from "../pages/SearchBar.jsx";
 import "./Navbar.css";
 
 
 export default function Navbar({ isLoggedIn, setIsLoggedIn, onSearch }) {
+  console.log("Navbar props:", props);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -60,7 +61,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn, onSearch }) {
         <Link to="/" className="navbar-brand">
           Strive Blog
         </Link>
-        <SearchBar onSearch={onSearch} />
+        <SearchBar onSearch={props.onSearch} />
         <button className="mobile-menu-button" onClick={toggleMobileMenu}>
           ☰
         </button>
