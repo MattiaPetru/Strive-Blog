@@ -11,12 +11,15 @@ import { useState } from "react";
 // Definisce il componente principale App
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
- 
+  const [searchTerm, setSearchTerm] = useState('');
 
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
   return (
     <Router>
       <div className="App">
-        <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  />
+        <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} onSearch={handleSearch}  />
 
         <main>
           <Routes>
@@ -27,7 +30,7 @@ function App() {
             <Route path="/login" element={<Login />} />
 
             {/* Route per la home page */}
-            <Route path="/" element={<Home />} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            <Route path="/" element={<Home />} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} searchTerm={searchTerm} />
 
             {/* Route per la pagina di creazione di un nuovo post */}
             <Route path="/create" element={<CreatePost />} />

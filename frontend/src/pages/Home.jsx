@@ -4,11 +4,10 @@ import { getPosts,getMe,deleteComment, deletePost } from "../services/api";
 import SearchBar from "./SearchBar";
 import "./Home.css";
 
-export default function Home({ isLoggedIn, setIsLoggedIn}) {
+export default function Home({ isLoggedIn, setIsLoggedIn, searchTerm }) {
   // Stato per memorizzare l'array dei post
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
  
   const navigate = useNavigate();
   // Effect hook per fetchare i post quando il componente viene montato
@@ -51,7 +50,6 @@ export default function Home({ isLoggedIn, setIsLoggedIn}) {
   return (
     <div className="container">
       <h1>Lista dei Post</h1>
-      <SearchBar onSearch={handleSearch} />
       <div className="post-grid">
         {filteredPosts.map((post) => (
           <Link to={`/post/${post._id}`} key={post._id} className="post-card">
