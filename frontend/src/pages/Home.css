@@ -1,16 +1,15 @@
-/* Contenitore principale */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
 }
 
-/* Contenitore della barra di ricerca */
-.search-container {
-  width: 100%;
-  margin-bottom: 20px;
+.post-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  margin-top: 20px;
 }
 
 /* Griglia dei post con Flexbox */
