@@ -3,10 +3,13 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Contenitore della barra di ricerca */
 .search-container {
+  width: 100%;
   margin-bottom: 20px;
 }
 
@@ -15,8 +18,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: space-around;
-  padding: 20px 0;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 /* Card del post */
